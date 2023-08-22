@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ’eŠÛ‚ÌíœE‘¬“xƒxƒNƒgƒ‹‚Ì§Œä‚ğs‚¤
+/// å¼¾ä¸¸ã®å‰Šé™¤ãƒ»é€Ÿåº¦ãƒ™ã‚¯ãƒˆãƒ«ã®åˆ¶å¾¡ã‚’è¡Œã†
 /// </summary>
 
 public class ControlBullet : MonoBehaviour
 {
     /// <summary>
-    /// “G‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg
+    /// æ•µã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     /// </summary>
     private GameObject enemy;
 
     /// <summary>
-    /// ’eŠÛ‚Ì‘¬“x
+    /// å¼¾ä¸¸ã®é€Ÿåº¦
     /// </summary>
     private float bulletSpd;
 
-    [Header("ƒvƒŒƒCƒ„[‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg")]
+    [Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     private GameObject player;
 
-    [Header("ƒGƒlƒ~[ƒ^ƒO‚Ì–¼‘O")]
+    [Header("ã‚¨ãƒãƒŸãƒ¼ã‚¿ã‚°ã®åå‰")]
     [SerializeField] string enemyTag = "Enemy";
 
 
@@ -41,10 +41,10 @@ public class ControlBullet : MonoBehaviour
 
         if (enemy != null)
         {
-            //•ûŒüƒxƒNƒgƒ‹
+            //æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
             Vector3 blToEnemy = enemy.transform.position - transform.position;
 
-            //“G‚Ì•ûŠp‚Öi‚Ş
+            //æ•µã®æ–¹è§’ã¸é€²ã‚€
             GetComponent<Rigidbody>().velocity = blToEnemy / blToEnemy.magnitude * bulletSpd;
         }
         else Destroy(gameObject);

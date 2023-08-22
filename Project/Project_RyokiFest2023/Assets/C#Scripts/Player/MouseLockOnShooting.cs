@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// ’eŠÛ‚ğ”­Ë‚·‚é‚Æ‚«‚ÉAƒXƒNƒŠ[ƒ“ã‚Å“G‚ÉƒJ[ƒ\ƒ‹‚ğ‡‚í‚¹‚Ä‚¢‚é‚Æ©“®‚Å‚»‚ÌˆÊ’u‚ÉŒü‚¯‚Ä”­Ë‚·‚é‚æ‚¤‚É‚·‚é‚½‚ß‚ÌƒXƒNƒŠƒvƒg
+/// å¼¾ä¸¸ã‚’ç™ºå°„ã™ã‚‹ã¨ãã«ã€ã‚¹ã‚¯ãƒªãƒ¼ãƒ³ä¸Šã§æ•µã«ã‚«ãƒ¼ã‚½ãƒ«ã‚’åˆã‚ã›ã¦ã„ã‚‹ã¨è‡ªå‹•ã§ãã®ä½ç½®ã«å‘ã‘ã¦ç™ºå°„ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹ãŸã‚ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 /// </summary>
 
 
@@ -14,26 +14,26 @@ public class MouseLockOnShooting : MonoBehaviour
 
     [SerializeField] private Camera targetCamera;
 
-    [Header("’eŠÛ‚ğ¶¬‚·‚é‚Æ‚«‚ÉƒvƒŒƒCƒ„[‚ğŒ´“_‚Æ‚µ‚Ä‚Ç‚ÌˆÊ’u‚É¶¬‚·‚é‚©‚ğw’è‚·‚éƒxƒNƒgƒ‹3")]
+    [Header("å¼¾ä¸¸ã‚’ç”Ÿæˆã™ã‚‹ã¨ãã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’åŸç‚¹ã¨ã—ã¦ã©ã®ä½ç½®ã«ç”Ÿæˆã™ã‚‹ã‹ã‚’æŒ‡å®šã™ã‚‹ãƒ™ã‚¯ãƒˆãƒ«3")]
     [SerializeField] private Vector3 bulletCreatePos_playerLocal;
 
-    [Header("”­Ë‚·‚é’eŠÛ‚ÌPrefab")]
+    [Header("ç™ºå°„ã™ã‚‹å¼¾ä¸¸ã®Prefab")]
     [SerializeField] private GameObject bullet;
 
-    [Header("’eŠÛ‚ÌƒXƒs[ƒh")]
+    [Header("å¼¾ä¸¸ã®ã‚¹ãƒ”ãƒ¼ãƒ‰")]
     [SerializeField] private float bulletSpd;
 
     /// <summary>
-    /// “G‚É‚æ‚Á‚Ä‚±‚Ì’l‚Í•Ï‚¦‚é•K—v‚ª‚ ‚é¨“Gˆê‘Ì‚²‚Æ‚ÉŒÅ—L‚ÉŠ„‚èU‚é•K—v‚ ‚è
+    /// æ•µã«ã‚ˆã£ã¦ã“ã®å€¤ã¯å¤‰ãˆã‚‹å¿…è¦ãŒã‚ã‚‹â†’æ•µä¸€ä½“ã”ã¨ã«å›ºæœ‰ã«å‰²ã‚ŠæŒ¯ã‚‹å¿…è¦ã‚ã‚Š
     /// </summary>
-    [Header("“G‚ÌÀ•W‚Æƒ}ƒEƒXÀ•W‚Ì‹–—eŒë·")]
+    [Header("æ•µã®åº§æ¨™ã¨ãƒã‚¦ã‚¹åº§æ¨™ã®è¨±å®¹èª¤å·®")]
     [SerializeField] private float distError;
 
-    [Header("ƒƒbƒNƒIƒ“‚·‚é“G‚ÌƒŠƒXƒg")]
+    [Header("ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹æ•µã®ãƒªã‚¹ãƒˆ")]
     public List<GameObject> enemies;
 
     /// <summary>
-    /// ƒƒbƒNƒIƒ“‚·‚é“G‚Ì‰¼‚ÌƒŠƒXƒg
+    /// ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã™ã‚‹æ•µã®ä»®ã®ãƒªã‚¹ãƒˆ
     /// </summary>
     [SerializeField] private List<GameObject> targetEnemiesList;
 
@@ -43,11 +43,11 @@ public class MouseLockOnShooting : MonoBehaviour
     {
         targetEnemiesList = new List<GameObject>();
 
-        Vector2 mousePos = Input.mousePosition; //ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌƒXƒNƒŠ[ƒ“À•W
-        
+        Vector2 mousePos = Input.mousePosition; //ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™
+
         foreach (var enemy in enemies)
         {
-            //“G‚Ìƒ[ƒ‹ƒhÀ•W‚ğƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·
+            //æ•µã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›
             Vector2 enemyPos = targetCamera.WorldToScreenPoint(enemy.transform.position);
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && IsRockON(mousePos, enemyPos))
@@ -59,8 +59,8 @@ public class MouseLockOnShooting : MonoBehaviour
 
         if (targetEnemiesList.Count != 0)
         {
-            //ƒXƒNƒŠ[ƒ“À•W‚Å•¡”‚ÌƒIƒuƒWƒFƒNƒg‚ªd‚È‚Á‚½ê‡AÅ‚àzÀ•W‚ª¬‚³‚¢(~Å‚àè‘O‚É•`‰æ‚³‚ê‚Ä‚¢‚é)ƒIƒuƒWƒFƒNƒg‚ğ‘I‘ğ
-            //‰ü‘P‚Ì—]’n‚ ‚è(zÀ•W‚ğ’Pƒ‚É”äŠr‚·‚é‚¾‚¯‚Å‚Í‘Î‰‚Å‚«‚È‚¢ê‡‚ª¡Œã”­¶‚·‚é‰Â”\«‚ª‚ ‚é‚½‚ß)
+            //ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã§è¤‡æ•°ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒé‡ãªã£ãŸå ´åˆã€æœ€ã‚‚zåº§æ¨™ãŒå°ã•ã„(~æœ€ã‚‚æ‰‹å‰ã«æç”»ã•ã‚Œã¦ã„ã‚‹)ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é¸æŠ
+            //æ”¹å–„ã®ä½™åœ°ã‚ã‚Š(zåº§æ¨™ã‚’å˜ç´”ã«æ¯”è¼ƒã™ã‚‹ã ã‘ã§ã¯å¯¾å¿œã§ããªã„å ´åˆãŒä»Šå¾Œç™ºç”Ÿã™ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚)
             int index = 0;
             float dis = 0;
             for (int i = 0; i < targetEnemiesList.Count; i++)
@@ -80,17 +80,17 @@ public class MouseLockOnShooting : MonoBehaviour
                 }
             }
 
-            //”­Ë
+            //ç™ºå°„
             Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd);
         }
     }
 
 
     /// <summary>
-    /// ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ“G‚É‡‚í‚¹‚Ä‚¢‚é‚©”»’è
+    /// ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã‚’æ•µã«åˆã‚ã›ã¦ã„ã‚‹ã‹åˆ¤å®š
     /// </summary>
-    /// <param name="mousePos">ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌƒXƒNƒŠ[ƒ“À•W</param>
-    /// <param name="enemyPos">“G‚ÌƒXƒNƒŠ[ƒ“À•W</param>
+    /// <param name="mousePos">ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™</param>
+    /// <param name="enemyPos">æ•µã®ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™</param>
     /// <returns></returns>
     bool IsRockON(Vector2 mousePos, Vector2 enemyPos)
     {
@@ -100,17 +100,18 @@ public class MouseLockOnShooting : MonoBehaviour
 
 
     /// <summary>
-    /// ’eŠÛ‚ğ“G‚ÌˆÊ’u‚É”­Ë‚·‚é
+    /// å¼¾ä¸¸ã‚’æ•µã®ä½ç½®ã«ç™ºå°„ã™ã‚‹
     /// </summary>
-    /// <param name="player">ƒvƒŒƒCƒ„[‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg</param>
-    /// <param name="enemy">“G‚ÌƒQ[ƒ€ƒIƒuƒWƒFƒNƒg</param>
-    /// <param name="createPos">’eŠÛ‚ğì¬‚·‚éˆÊ’uÀ•WiƒvƒŒƒCƒ„[‚ğŒ´“_‚Æ‚µ‚½ƒ[ƒJƒ‹À•Wj</param>
+    /// <param name="player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+    /// <param name="enemy">æ•µã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+    /// <param name="createPos">å¼¾ä¸¸ã‚’ä½œæˆã™ã‚‹ä½ç½®åº§æ¨™ï¼ˆãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’åŸç‚¹ã¨ã—ãŸãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™ï¼‰</param>
+    /// <param name="bulletSpd">å¼¾ä¸¸ã®é€Ÿåº¦</param>
     void Fire(GameObject player, GameObject enemy, Vector3 createPos, float bulletSpd)
     {
-        //’eŠÛ‚ğ¶¬
+        //å¼¾ä¸¸ã‚’ç”Ÿæˆ
         GameObject bl = Instantiate(bullet);
-        
-        //À•W‚ğC³
+
+        //åº§æ¨™ã‚’ä¿®æ­£
         bl.transform.position = player.transform.position + createPos;
 
         bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject);
@@ -118,9 +119,9 @@ public class MouseLockOnShooting : MonoBehaviour
 
 
     /// <summary>
-    /// enemies‚Ì—v‘f‚ğíœ
+    /// enemiesã®è¦ç´ ã‚’å‰Šé™¤
     /// </summary>
-    /// <param name="enemy">íœ‚·‚é—v‘f</param>
+    /// <param name="enemy">å‰Šé™¤ã™ã‚‹è¦ç´ </param>
     public void DestroyEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
