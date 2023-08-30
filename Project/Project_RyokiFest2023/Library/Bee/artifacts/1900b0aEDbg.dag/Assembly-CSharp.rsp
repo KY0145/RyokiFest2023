@@ -355,6 +355,8 @@
 "Assets/C#Scripts/AspectKeeper.cs"
 "Assets/C#Scripts/Bullet/ControlBullet.cs"
 "Assets/C#Scripts/Player/MouseLockOnShooting.cs"
+"Assets/C#Scripts/TrackingMouseCursor.cs"
+"Assets/C#Scripts/UI_LockOn.cs"
 -langversion:9.0
 
 /deterministic
