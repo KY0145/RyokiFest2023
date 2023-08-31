@@ -354,9 +354,11 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.1f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/C#Scripts/AspectKeeper.cs"
 "Assets/C#Scripts/Bullet/ControlBullet.cs"
+"Assets/C#Scripts/Enemy/ControlEnemy.cs"
 "Assets/C#Scripts/Player/MouseLockOnShooting.cs"
 "Assets/C#Scripts/Player/move.cs"
 "Assets/C#Scripts/Player/RandomCreateEnemy.cs"
+"Assets/C#Scripts/ScriptableObjects/EnemyParam.cs"
 "Assets/C#Scripts/TrackingMouseCursor.cs"
 "Assets/C#Scripts/UI_LockOn.cs"
 -langversion:9.0

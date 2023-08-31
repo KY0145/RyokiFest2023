@@ -18,21 +18,29 @@ public class ControlBullet : MonoBehaviour
     /// </summary>
     private float bulletSpd;
 
+    /// <summary>
+    /// 攻撃力
+    /// </summary>
+    private float power;
+
     [Header("目標エネミーが消えた時、一緒に弾丸も消える")]
     [SerializeField] private bool isDestroyWhenEnemyIsDestroied = true;
 
-    [Header("プレイヤーのゲームオブジェクト")]
+    /// <summary>
+    /// プレイヤーのゲームオブジェクト
+    /// </summary>
     private GameObject player;
 
     [Header("エネミータグの名前")]
     [SerializeField] string enemyTag = "Enemy";
 
 
-    public void SetValues(GameObject enemy, float bulletSpd, GameObject player)
+    public void SetValues(GameObject enemy, float bulletSpd, GameObject player, float power)
     {
         this.enemy = enemy;
         this.bulletSpd = bulletSpd;
         this.player = player;
+        this.power = power;
     }
 
     void Update()
@@ -66,15 +74,31 @@ public class ControlBullet : MonoBehaviour
         {
             if (collision.gameObject.tag == enemyTag)
             {
-                //player.GetComponent<MouseLockOnShooting>().DestroyEnemy(collision.gameObject);
-                player.GetComponent<MouseLockOnShooting>().enemies.Remove(collision.gameObject);
-                Destroy(collision.gameObject);
-                Destroy(gameObject);
+                WhenCollisionEnemy(collision);
             }
             else
             {
-                Destroy(gameObject);
+                WhenCollisionAny();
             }
         }
+    }
+
+
+    void WhenCollisionEnemy(Collision collision)
+    {
+        /*
+        //player.GetComponent<MouseLockOnShooting>().DestroyEnemy(collision.gameObject);
+        player.GetComponent<MouseLockOnShooting>().enemies.Remove(collision.gameObject);
+        Destroy(collision.gameObject);
+        Destroy(gameObject);*/
+
+        collision.gameObject.GetComponent<ControlEnemy>().HP -= power;
+        Destroy(gameObject);
+    }
+
+
+    void WhenCollisionAny()
+    {
+        Destroy(gameObject);
     }
 }

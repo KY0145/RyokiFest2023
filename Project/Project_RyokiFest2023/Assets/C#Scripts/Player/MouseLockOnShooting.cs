@@ -26,6 +26,9 @@ public class MouseLockOnShooting : MonoBehaviour
     [Header("弾丸のスピード")]
     [SerializeField] private float bulletSpd;
 
+    [Header("攻撃力")]
+    [SerializeField] private float power;
+
     /// <summary>
     /// 敵によってこの値は変える必要がある→敵一体ごとに固有に割り振る必要あり
     /// </summary>
@@ -127,7 +130,7 @@ public class MouseLockOnShooting : MonoBehaviour
         //座標を修正
         bl.transform.position = player.transform.position + createPos;
 
-        bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject);
+        bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject, power);
     }
 
 
