@@ -146,6 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a028ab17584b6341ad5419c75393514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  player: {fileID: 6848928447647872911, guid: 7b8a46fcf73ec704fb618392c98f6991, type: 3}
+  isDestroyWhenEnemyIsDestroied: 0
   enemyTag: Enemy

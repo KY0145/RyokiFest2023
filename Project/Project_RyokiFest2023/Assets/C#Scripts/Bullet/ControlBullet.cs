@@ -18,6 +18,9 @@ public class ControlBullet : MonoBehaviour
     /// </summary>
     private float bulletSpd;
 
+    [Header("目標エネミーが消えた時、一緒に弾丸も消える")]
+    [SerializeField] private bool isDestroyWhenEnemyIsDestroied = true;
+
     [Header("プレイヤーのゲームオブジェクト")]
     private GameObject player;
 
@@ -47,16 +50,24 @@ public class ControlBullet : MonoBehaviour
             //敵の方角へ進む
             GetComponent<Rigidbody>().velocity = blToEnemy / blToEnemy.magnitude * bulletSpd;
         }
-        else Destroy(gameObject);
+        else
+        {
+            if(isDestroyWhenEnemyIsDestroied)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject != player && collision.gameObject != gameObject)
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject != player && !collision.gameObject.name.Contains(gameObject.name))
         {
             if (collision.gameObject.tag == enemyTag)
             {
-                player.GetComponent<MouseLockOnShooting>().DestroyEnemy(collision.gameObject);
+                //player.GetComponent<MouseLockOnShooting>().DestroyEnemy(collision.gameObject);
+                player.GetComponent<MouseLockOnShooting>().enemies.Remove(collision.gameObject);
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
             }

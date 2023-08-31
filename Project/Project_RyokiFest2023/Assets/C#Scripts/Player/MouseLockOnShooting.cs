@@ -14,6 +14,9 @@ public class MouseLockOnShooting : MonoBehaviour
 
     [SerializeField] private Camera targetCamera;
 
+    [Header("左クリックをしなくても自動で毎フレーム弾丸を発射する")]
+    [SerializeField] private bool isRensya = false;
+
     [Header("弾丸を生成するときにプレイヤーを原点としてどの位置に生成するかを指定するベクトル3")]
     [SerializeField] private Vector3 bulletCreatePos_playerLocal;
 
@@ -50,9 +53,19 @@ public class MouseLockOnShooting : MonoBehaviour
             //敵のワールド座標をスクリーン座標に変換
             Vector2 enemyPos = targetCamera.WorldToScreenPoint(enemy.transform.position);
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && IsRockON(mousePos, enemyPos))
+            if (isRensya)
             {
-                targetEnemiesList.Add(enemy);
+                if (IsRockON(mousePos, enemyPos))
+                {
+                    targetEnemiesList.Add(enemy);
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse0) && IsRockON(mousePos, enemyPos))
+                {
+                    targetEnemiesList.Add(enemy);
+                }
             }
         }
 
@@ -94,7 +107,7 @@ public class MouseLockOnShooting : MonoBehaviour
     /// <returns></returns>
     bool IsRockON(Vector2 mousePos, Vector2 enemyPos)
     {
-        Debug.Log((mousePos - enemyPos).magnitude);
+        //Debug.Log((mousePos - enemyPos).magnitude);
         return (mousePos - enemyPos).magnitude <= distError;
     }
 
