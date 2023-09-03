@@ -425,7 +425,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07f8ccda890a5814fabbf68078c8d1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 963194227}
+  mainCamera: {fileID: 963194227}
+  player: {fileID: 38748780}
 --- !u!1 &259236469
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +698,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -740,9 +742,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.086907685
+    y: 0.026751429
     width: 1
-    height: 0.82618463
+    height: 0.94649714
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -792,6 +794,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetCamera: {fileID: 963194227}
   aspectVec: {x: 1920, y: 1200}
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d232e31732e49164ba166865a9b762f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xAng_max: 15
+  yAng_max: 15
+  unchangeRange_x: 0.5
+  unchangeRange_y: 0.5
 --- !u!1 &1176920475
 GameObject:
   m_ObjectHideFlags: 0

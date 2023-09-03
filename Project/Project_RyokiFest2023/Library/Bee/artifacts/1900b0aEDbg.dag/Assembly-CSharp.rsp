@@ -355,12 +355,13 @@
 "Assets/C#Scripts/AspectKeeper.cs"
 "Assets/C#Scripts/Bullet/ControlBullet.cs"
 "Assets/C#Scripts/Enemy/ControlEnemy.cs"
+"Assets/C#Scripts/Main Camera/CameraSwiveling.cs"
 "Assets/C#Scripts/Player/MouseLockOnShooting.cs"
 "Assets/C#Scripts/Player/move.cs"
 "Assets/C#Scripts/Player/RandomCreateEnemy.cs"
 "Assets/C#Scripts/ScriptableObjects/EnemyParam.cs"
-"Assets/C#Scripts/TrackingMouseCursor.cs"
-"Assets/C#Scripts/UI_LockOn.cs"
+"Assets/C#Scripts/UI_LockOn/CreateUI_LockOn.cs"
+"Assets/C#Scripts/UI_LockOn/TrackingMouseCursor.cs"
 -langversion:9.0
 
 /deterministic
