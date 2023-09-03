@@ -38,10 +38,8 @@ public class MouseLockOnShooting : MonoBehaviour
     [Header("ロックオンする敵のリスト")]
     public List<GameObject> enemies;
 
-    /// <summary>
-    /// ロックオンする敵の仮のリスト
-    /// </summary>
-    [SerializeField] private List<GameObject> targetEnemiesList;
+    [Header("ロックオンする敵の仮のリスト")]
+    public List<GameObject> targetEnemiesList;
 
 
 
@@ -56,19 +54,9 @@ public class MouseLockOnShooting : MonoBehaviour
             //敵のワールド座標をスクリーン座標に変換
             Vector2 enemyPos = targetCamera.WorldToScreenPoint(enemy.transform.position);
 
-            if (isRensya)
+            if (IsRockON(mousePos, enemyPos))
             {
-                if (IsRockON(mousePos, enemyPos))
-                {
-                    targetEnemiesList.Add(enemy);
-                }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Mouse0) && IsRockON(mousePos, enemyPos))
-                {
-                    targetEnemiesList.Add(enemy);
-                }
+                targetEnemiesList.Add(enemy);
             }
         }
 
@@ -96,8 +84,20 @@ public class MouseLockOnShooting : MonoBehaviour
                 }
             }
 
+            targetEnemiesList[0] = targetEnemiesList[index];
+
             //発射
-            Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd);
+            if (isRensya)
+            {
+                Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd);
+            }
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd);
+                }
+            }
         }
     }
 
