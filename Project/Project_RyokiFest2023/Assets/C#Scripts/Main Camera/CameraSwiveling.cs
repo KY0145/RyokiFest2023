@@ -23,7 +23,7 @@ public class CameraSwiveling: MonoBehaviour
     [SerializeField] private float yAng_max = 15;
 
     /*
-     * 以下二つの変数はスクリーンの端を1,中心を0としている
+     * 以下二つの変数はスクリーンの端を0,中心を1としている
      */
 
     /// <summary>
