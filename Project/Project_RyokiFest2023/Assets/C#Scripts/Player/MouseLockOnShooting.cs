@@ -14,6 +14,12 @@ public class MouseLockOnShooting : MonoBehaviour
 
     [SerializeField] private Camera targetCamera;
 
+    /// <summary>
+    /// ロックオンできる距離
+    /// </summary>
+    [Header("ロックオンできる距離")]
+    [SerializeField] private float disLimit;
+
     [Header("左クリックをしなくても自動で毎フレーム弾丸を発射する")]
     [SerializeField] private bool isRensya = false;
 
@@ -51,10 +57,7 @@ public class MouseLockOnShooting : MonoBehaviour
 
         foreach (var enemy in enemies)
         {
-            //敵のワールド座標をスクリーン座標に変換
-            Vector2 enemyPos = targetCamera.WorldToScreenPoint(enemy.transform.position);
-
-            if (IsRockON(mousePos, enemyPos))
+            if (IsRockON(mousePos, enemy.transform.position, targetCamera.transform.position))
             {
                 targetEnemiesList.Add(enemy);
             }
@@ -105,13 +108,19 @@ public class MouseLockOnShooting : MonoBehaviour
     /// <summary>
     /// マウスカーソルを敵に合わせているか判定
     /// </summary>
-    /// <param name="mousePos">マウスカーソルのスクリーン座標</param>
-    /// <param name="enemyPos">敵のスクリーン座標</param>
+    /// <param name="mouseScreenPos">マウスカーソルのスクリーン座標</param>
+    /// <param name="enemyWorldPos">敵のワールド座標</param>
+    /// <param name="cameraWorldPos">カメラのワールド座標</param>
     /// <returns></returns>
-    bool IsRockON(Vector2 mousePos, Vector2 enemyPos)
+    bool IsRockON(Vector2 mouseScreenPos, Vector3 enemyWorldPos, Vector3 cameraWorldPos)
     {
-        //Debug.Log((mousePos - enemyPos).magnitude);
-        return (mousePos - enemyPos).magnitude <= distError;
+        //敵のワールド座標をスクリーン座標に変換
+        Vector2 enemyScreenPos = targetCamera.WorldToScreenPoint(enemyWorldPos);
+
+        bool isScreen = (mouseScreenPos - enemyScreenPos).magnitude <= distError;
+        bool isDis = enemyWorldPos.z - cameraWorldPos.z <= disLimit;
+
+        return isScreen && isDis;
     }
 
 

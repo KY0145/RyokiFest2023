@@ -246,6 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 38748780}
   targetCamera: {fileID: 963194227}
+  disLimit: 100
   isRensya: 0
   bulletCreatePos_playerLocal: {x: 0, y: 0, z: 1}
   bullet: {fileID: 4767116969241487499, guid: 27d18e0ce7c7cd348b233f5f56609b99, type: 3}
@@ -806,10 +807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d232e31732e49164ba166865a9b762f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xAng_max: 15
-  yAng_max: 15
-  unchangeRange_x: 0.5
-  unchangeRange_y: 0.5
+  xAng_max: 5
+  yAng_max: 5
+  unchangeRange_x: 0.3
+  unchangeRange_y: 0.3
 --- !u!1 &1176920475
 GameObject:
   m_ObjectHideFlags: 0
