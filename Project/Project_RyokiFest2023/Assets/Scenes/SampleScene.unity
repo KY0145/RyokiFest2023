@@ -297,6 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 5
+  accelerator: 0
 --- !u!114 &38748788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,10 +837,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0.01862982
-    width: 1
-    height: 0.96274036
+    x: 0.056554288
+    y: 0
+    width: 0.8868914
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1062,6 +1063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 10
+  accelerator: 10
 --- !u!114 &1656985967
 MonoBehaviour:
   m_ObjectHideFlags: 0
