@@ -92,13 +92,13 @@ public class MouseLockOnShooting : MonoBehaviour
             //発射
             if (isRensya)
             {
-                Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd);
+                Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd, true);
             }
             else
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd);
+                    Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd, true);
                 }
             }
         }
@@ -131,7 +131,7 @@ public class MouseLockOnShooting : MonoBehaviour
     /// <param name="enemy">敵のゲームオブジェクト</param>
     /// <param name="createPos">弾丸を作成する位置座標（プレイヤーを原点としたローカル座標）</param>
     /// <param name="bulletSpd">弾丸の速度</param>
-    void Fire(GameObject player, GameObject enemy, Vector3 createPos, float bulletSpd)
+    void Fire(GameObject player, GameObject enemy, Vector3 createPos, float bulletSpd, bool isTracing)
     {
         //弾丸を生成
         GameObject bl = Instantiate(bullet);
@@ -139,7 +139,7 @@ public class MouseLockOnShooting : MonoBehaviour
         //座標を修正
         bl.transform.position = player.transform.position + createPos;
 
-        bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject, power);
+        bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject, power, isTracing);
     }
 
 

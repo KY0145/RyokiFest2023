@@ -18,22 +18,21 @@ public class move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //à⁄ìÆë¨ìxÇíºê⁄ïœçXÇ∑ÇÈ
-        rb.velocity = new Vector3(0, 0, 0);
+        rb.velocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
 
         float ac = 0;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
         {
             ac = accelerator;
         }
-        if (Input.GetKey(KeyCode.LeftArrow)) 
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) 
         {
-            rb.velocity = new Vector3(-(velocity+ac), 0, 0);
+            rb.velocity = new Vector3(-(velocity + ac) + rb.velocity.x, rb.velocity.y, rb.velocity.z);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            rb.velocity = new Vector3(velocity+ac, 0, 0);
+            rb.velocity = new Vector3(velocity + ac + rb.velocity.x, rb.velocity.y, rb.velocity.z);
         }
        
     }

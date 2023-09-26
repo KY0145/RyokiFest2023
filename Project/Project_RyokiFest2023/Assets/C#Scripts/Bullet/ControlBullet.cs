@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,9 @@ public class ControlBullet : MonoBehaviour
     /// </summary>
     private float power;
 
+    [Header("弾丸が目標を追尾する")]
+    [SerializeField] private bool isTracing;
+
     [Header("目標エネミーが消えた時、一緒に弾丸も消える")]
     [SerializeField] private bool isDestroyWhenEnemyIsDestroied = true;
 
@@ -31,16 +35,15 @@ public class ControlBullet : MonoBehaviour
     /// </summary>
     private GameObject player;
 
-    [Header("エネミータグの名前")]
-    [SerializeField] string enemyTag = "Enemy";
 
 
-    public void SetValues(GameObject enemy, float bulletSpd, GameObject player, float power)
+    public void SetValues(GameObject enemy, float bulletSpd, GameObject player, float power, bool isTracing)
     {
         this.enemy = enemy;
         this.bulletSpd = bulletSpd;
         this.player = player;
         this.power = power;
+        this.isTracing = isTracing;
     }
 
     void Update()
@@ -50,7 +53,7 @@ public class ControlBullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (enemy != null)
+        if (enemy != null && isTracing)
         {
             //方向ベクトル
             Vector3 blToEnemy = enemy.transform.position - transform.position;
@@ -69,36 +72,20 @@ public class ControlBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject != player && !collision.gameObject.name.Contains(gameObject.name))
         {
-            if (collision.gameObject.tag == enemyTag)
+            try
             {
-                WhenCollisionEnemy(collision);
+                collision.gameObject.GetComponent<ControlEnemy>().HP -= power;
             }
-            else
+            catch(NullReferenceException)
             {
-                WhenCollisionAny();
+                collision.gameObject.GetComponent<ControlPlayer>().HP -= power;
+            }
+            finally
+            {
+                Destroy(gameObject);
             }
         }
-    }
-
-
-    void WhenCollisionEnemy(Collision collision)
-    {
-        /*
-        //player.GetComponent<MouseLockOnShooting>().DestroyEnemy(collision.gameObject);
-        player.GetComponent<MouseLockOnShooting>().enemies.Remove(collision.gameObject);
-        Destroy(collision.gameObject);
-        Destroy(gameObject);*/
-
-        collision.gameObject.GetComponent<ControlEnemy>().HP -= power;
-        Destroy(gameObject);
-    }
-
-
-    void WhenCollisionAny()
-    {
-        Destroy(gameObject);
     }
 }

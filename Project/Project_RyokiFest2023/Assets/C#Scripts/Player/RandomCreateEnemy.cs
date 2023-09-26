@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class RandomCreateEnemy : MonoBehaviour
 {
+    [SerializeField] GameObject player;
     [SerializeField] GameObject enemy;
 
     [Header("x座標の範囲（最小値,最大値）")]
@@ -24,11 +25,13 @@ public class RandomCreateEnemy : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             var e = Instantiate(enemy);
             e.transform.position = RandomPos();
             GetComponent<MouseLockOnShooting>().enemies.Add(e);
+
+            e.GetComponent<ControlEnemy>().player = player;
         }
     }
 

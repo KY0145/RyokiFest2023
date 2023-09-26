@@ -10,4 +10,19 @@ public class EnemyParam : ScriptableObject
 {
     [Header("エネミーの初期HP")]
     public float HP = 3.0f;
+
+    [Header("攻撃力")]
+    public float power = 1f;
+
+    [Header("弾丸生成位置")]
+    public Vector3 createPos;
+
+    [Header("弾丸の速さ")]
+    public float bulletSpd;
+
+    [Header("弾丸が追尾する")]
+    public bool isTracing;
+
+    [Header("弾丸")]
+    public GameObject bullet;
 }

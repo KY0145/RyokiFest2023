@@ -6,10 +6,10 @@ using UnityEngine;
 public class movelimit : MonoBehaviour
 {
 
-    //x²•ûŒü‚ÌˆÚ“®”ÍˆÍ‚ÌÅ¬’l
+    //xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½ÍˆÍ‚ÌÅï¿½ï¿½l
     [SerializeField] private float _minX = -1;
 
-    //x²•ûŒü‚ÌˆÚ“®”ÍˆÍ‚ÌÅ‘å’l
+    //xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½ÍˆÍ‚ÌÅ‘ï¿½l
     [SerializeField] private float _maxX = 1;
 
 
@@ -19,7 +19,7 @@ public class movelimit : MonoBehaviour
     {
         var pos = transform.position;
 
-        // x²•ûŒü‚ÌˆÚ“®”ÍˆÍ‚Ì§ŒÀ
+        // xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½ÍˆÍ‚Ìï¿½ï¿½ï¿½
         pos.x = Mathf.Clamp(pos.x, _minX, _maxX);
 
         transform.position = pos;
