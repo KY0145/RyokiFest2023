@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 
 /// <summary>
@@ -51,54 +54,53 @@ public class MouseLockOnShooting : MonoBehaviour
 
     void Update()
     {
+        Vector4 plane = EquationPlane(player.transform.position, player.transform.position + move.ReturnDirection(player.transform.eulerAngles.y + 90, 1), player.transform.position + new Vector3(0,1,0));
+
         targetEnemiesList = new List<GameObject>();
 
         Vector2 mousePos = Input.mousePosition; //マウスカーソルのスクリーン座標
 
         foreach (var enemy in enemies)
         {
-            if (IsRockON(mousePos, enemy.transform.position, targetCamera.transform.position))
+            if (IsRockON(mousePos, enemy.transform.position, targetCamera.transform.position, plane))
             {
                 targetEnemiesList.Add(enemy);
             }
         }
 
-
+        
         if (targetEnemiesList.Count != 0)
         {
-            //スクリーン座標で複数のオブジェクトが重なった場合、最もz座標が小さい(~最も手前に描画されている)オブジェクトを選択
-            //改善の余地あり(z座標を単純に比較するだけでは対応できない場合が今後発生する可能性があるため)
+            //スクリーン座標で複数のオブジェクトが重なった場合、プレイヤーが向いている方向に垂直な平面との距離が最も小さいものを選択
             int index = 0;
             float dis = 0;
             for (int i = 0; i < targetEnemiesList.Count; i++)
             {
                 if (i == 0)
                 {
-                    dis = targetEnemiesList[i].transform.position.z;
+                    dis = Math.Abs(DisPlanePoint(plane, targetEnemiesList[i].transform.position));
                     index = i;
                 }
                 else
                 {
-                    if (dis > targetEnemiesList[i].transform.position.z)
+                    if (dis > Math.Abs(DisPlanePoint(plane, targetEnemiesList[i].transform.position)))
                     {
-                        dis = targetEnemiesList[i].transform.position.z;
+                        dis = Math.Abs(DisPlanePoint(plane, targetEnemiesList[i].transform.position));
                         index = i;
                     }
                 }
             }
 
-            targetEnemiesList[0] = targetEnemiesList[index];
-
             //発射
             if (isRensya)
             {
-                Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd, true);
+                Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd, true);
             }
             else
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    Fire(player, targetEnemiesList[0], bulletCreatePos_playerLocal, bulletSpd, true);
+                    Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd, true);
                 }
             }
         }
@@ -112,13 +114,13 @@ public class MouseLockOnShooting : MonoBehaviour
     /// <param name="enemyWorldPos">敵のワールド座標</param>
     /// <param name="cameraWorldPos">カメラのワールド座標</param>
     /// <returns></returns>
-    bool IsRockON(Vector2 mouseScreenPos, Vector3 enemyWorldPos, Vector3 cameraWorldPos)
+    bool IsRockON(Vector2 mouseScreenPos, Vector3 enemyWorldPos, Vector3 cameraWorldPos, Vector4 plane)
     {
         //敵のワールド座標をスクリーン座標に変換
         Vector2 enemyScreenPos = targetCamera.WorldToScreenPoint(enemyWorldPos);
-
+        
         bool isScreen = (mouseScreenPos - enemyScreenPos).magnitude <= distError;
-        bool isDis = enemyWorldPos.z - cameraWorldPos.z <= disLimit;
+        bool isDis = Mathf.Abs(DisPlanePoint(plane, enemyWorldPos)) - Mathf.Abs(DisPlanePoint(plane, cameraWorldPos)) <= disLimit;
 
         return isScreen && isDis;
     }
@@ -150,5 +152,35 @@ public class MouseLockOnShooting : MonoBehaviour
     public void DestroyEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
+    }
+
+
+    /// <summary>
+    /// 平面の方程式を導出する
+    /// </summary>
+    /// <param name="a">平面上の1点</param>
+    /// <param name="b">平面上の1点</param>
+    /// <param name="c">平面上の1点</param>
+    /// <returns>ax+by+cz+d=0のa, b, c, dを格納したVector4</returns>
+    Vector4 EquationPlane(Vector3 a, Vector3 b, Vector3 c)
+    {
+        Vector3 ab = b - a;
+        Vector3 ac = c - a;
+
+        Vector3 abc = Vector3.Cross(ab, ac);
+
+        return new Vector4(abc.x, abc.y, abc.z, -(abc.x * a.x + abc.y * a.y + abc.z * a.z));
+    }
+
+
+    /// <summary>
+    /// 平面と点の符号付き距離
+    /// </summary>
+    /// <param name="plane">ax+by+cz+d=0のa, b, c, d</param>
+    /// <param name="point"></param>
+    /// <returns>平面と点の符号付き距離</returns>
+    float DisPlanePoint(Vector4 plane, Vector3 point) //Distance between plane and point
+    {
+        return (plane.x * point.x + plane.y * point.y + plane.z * point.z + plane.w) / Mathf.Sqrt(Mathf.Pow(plane.x, 2) + Mathf.Pow(plane.y, 2) + Mathf.Pow(plane.z, 2));
     }
 }

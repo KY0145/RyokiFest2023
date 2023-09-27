@@ -28,7 +28,7 @@ public class ControlBullet : MonoBehaviour
     [SerializeField] private bool isTracing;
 
     [Header("目標エネミーが消えた時、一緒に弾丸も消える")]
-    [SerializeField] private bool isDestroyWhenEnemyIsDestroied = true;
+    [SerializeField] private bool isDestroyWhenEnemyIsDestroied;
 
     /// <summary>
     /// プレイヤーのゲームオブジェクト

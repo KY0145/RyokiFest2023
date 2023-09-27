@@ -14,7 +14,7 @@ public class MoveCamera : MonoBehaviour
         
     }
 
-    void LateUpdate()
+    void Update()
     {
         transform.eulerAngles += new Vector3(0, player.transform.eulerAngles.y, 0);
 
