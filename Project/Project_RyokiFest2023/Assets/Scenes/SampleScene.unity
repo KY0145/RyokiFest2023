@@ -298,6 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 5
   accelerator: 0
+  rotateSpd: 0
 --- !u!114 &38748788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,11 +532,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb8893bf1d3b9544ea4e40f695ce8622, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb8893bf1d3b9544ea4e40f695ce8622, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb8893bf1d3b9544ea4e40f695ce8622, type: 3}
       propertyPath: m_LocalRotation.w
@@ -773,7 +774,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -500, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
@@ -885,6 +886,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -928,9 +930,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.018304437
+    y: 0.018906564
     width: 1
-    height: 0.9633911
+    height: 0.9621869
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -996,6 +998,20 @@ MonoBehaviour:
   yAng_max: 5
   unchangeRange_x: 0.3
   unchangeRange_y: 0.3
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69fc2790c9183ec4791c34c5967dc71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movingPos: {x: 0, y: 3.7, z: -16}
+  player: {fileID: 1656985963}
 --- !u!1 &1176920475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1150,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656985963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef4f5b50849e9064a8bfcfa27c992d6a, type: 3}
   m_Name: 
@@ -1153,8 +1169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b85d26ac32b44449a542941da0718dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 10
+  velocity: 0
   accelerator: 10
+  rotateSpd: 0.5
 --- !u!114 &1656985967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,7 +1220,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &1656985971
 BoxCollider:
@@ -1238,4 +1255,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88be3b6add614ca4d9f419809c60a051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  HP: 100

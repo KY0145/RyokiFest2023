@@ -357,6 +357,7 @@
 "Assets/C#Scripts/Enemy/ControlEnemy.cs"
 "Assets/C#Scripts/GameSystem.cs"
 "Assets/C#Scripts/Main Camera/CameraSwiveling.cs"
+"Assets/C#Scripts/Main Camera/MoveCamera.cs"
 "Assets/C#Scripts/Player/ControlPlayer.cs"
 "Assets/C#Scripts/Player/MouseLockOnShooting.cs"
 "Assets/C#Scripts/Player/move limit.cs"
