@@ -48,7 +48,7 @@ public class ControlBullet : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.transform.position.magnitude > 100)
+        if ((player.transform.position - gameObject.transform.position).magnitude > 100)
         {
             Destroy(gameObject);
         }

@@ -37,9 +37,9 @@ public class RandomCreateEnemy : MonoBehaviour
 
     Vector3 RandomPos()
     {
-        float x = Random.Range(x_range[0], x_range[1]);
-        float y = Random.Range(y_range[0], y_range[1]);
-        float z = Random.Range(z_range[0], z_range[1]);
+        float x = Random.Range(player.transform.position.x + x_range[0], player.transform.position.x + x_range[1]);
+        float y = Random.Range(player.transform.position.y + y_range[0], player.transform.position.y + y_range[1]);
+        float z = Random.Range(player.transform.position.z + z_range[0], player.transform.position.z + z_range[1]);
 
         return new Vector3(x, y, z);
     }

@@ -54,7 +54,7 @@ public class MouseLockOnShooting : MonoBehaviour
 
     void Update()
     {
-        Vector4 plane = EquationPlane(player.transform.position, player.transform.position + move.ReturnDirection(player.transform.eulerAngles.y + 90, 1), player.transform.position + new Vector3(0,1,0));
+        Vector4 plane = EquationPlane(player.transform.position, player.transform.position + movePlayer.ReturnDirection(player.transform.eulerAngles.y + 90, 1, Vector3.zero), player.transform.position + new Vector3(0,1,0));
 
         targetEnemiesList = new List<GameObject>();
 
@@ -142,6 +142,7 @@ public class MouseLockOnShooting : MonoBehaviour
         bl.transform.position = player.transform.position + createPos;
 
         bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject, power, isTracing);
+        Debug.Log(bl.gameObject.transform.position);
     }
 
 
