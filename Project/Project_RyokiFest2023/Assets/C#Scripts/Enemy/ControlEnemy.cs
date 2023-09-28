@@ -52,9 +52,16 @@ public class ControlEnemy : MonoBehaviour
 
         //攻撃コルーチンを開始
         StartCoroutine(FireCoroutine(roopCount));
+
+        //デバッグ用に追加
+        for (int i = 0; i < points.Length; i++)
+        {
+            points[i] = CalcVector.Rotate(points[i], -player.transform.eulerAngles.y * Mathf.PI / 180);
+            points[i] += player.transform.position;
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //設定距離以上のときアクティブ化
         if ((player.transform.position - transform.position).magnitude <= spawnDis)
@@ -100,7 +107,7 @@ public class ControlEnemy : MonoBehaviour
             rb.velocity /= (rb.velocity.magnitude / limitVelo);
         }
 
-        if ((rb.transform.position - points[I]).magnitude <= rotateDis)
+        if ((transform.position - points[I]).magnitude <= rotateDis)
         {
             I++;
         }
@@ -126,7 +133,7 @@ public class ControlEnemy : MonoBehaviour
         //座標を修正
         bl.transform.position = player.transform.position + enemyParam.createPos;
 
-        bl.GetComponent<ControlBullet>().SetValues(enemy, enemyParam.bulletSpd, player, enemyParam.power, enemyParam.isTracing);
+        bl.GetComponent<ControlBullet>().SetValues(enemy, enemyParam.bulletSpd, player, enemyParam.power, enemyParam.isTracing, enemyParam.tracingFrames);
 
         Vector3 blToEnemy = enemy.transform.position - player.transform.position;
 

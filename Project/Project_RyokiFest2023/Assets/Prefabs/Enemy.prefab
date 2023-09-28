@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 1382791273021235792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.71, y: 2.13, z: 6.25}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -149,14 +149,12 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyParam: {fileID: 11400000, guid: 60734bc3b3ada674580d401cbbcf6472, type: 2}
   spawnDis: 10000
-  doDis: 10000
-  force: 3
+  doDis: 150
+  force: 10
   rotateDis: 2
-  limitVelo: 10
-  roopCount: 5
+  limitVelo: 30
+  roopCount: 3
   points:
-  - {x: 4, y: 5, z: 10}
-  - {x: -4, y: 5, z: 10}
-  - {x: -4, y: 10, z: 10}
-  - {x: 4, y: 10, z: 10}
+  - {x: 4, y: 6, z: 30}
+  - {x: -4, y: 6, z: 0}
   HP: 0

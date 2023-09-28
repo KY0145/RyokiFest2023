@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 
 /// <summary>
@@ -23,24 +24,40 @@ public class RandomCreateEnemy : MonoBehaviour
     [SerializeField]
     float[] z_range = new float[2];
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            var e = Instantiate(enemy);
-            e.transform.position = RandomPos();
-            GetComponent<MouseLockOnShooting>().enemies.Add(e);
-
-            e.GetComponent<ControlEnemy>().player = player;
+            StartCoroutine(CreateEnemyCoroutine(30, 2));
         }
     }
 
     Vector3 RandomPos()
     {
-        float x = Random.Range(player.transform.position.x + x_range[0], player.transform.position.x + x_range[1]);
-        float y = Random.Range(player.transform.position.y + y_range[0], player.transform.position.y + y_range[1]);
-        float z = Random.Range(player.transform.position.z + z_range[0], player.transform.position.z + z_range[1]);
+        float x = Random.Range(x_range[0], x_range[1]);
+        float y = Random.Range(y_range[0], y_range[1]);
+        float z = Random.Range(z_range[0], z_range[1]);
 
-        return new Vector3(x, y, z);
+        Vector3 result = CalcVector.Rotate(new Vector3(x, y, z), -player.transform.eulerAngles.y * Mathf.PI / 180);
+
+        return result + player.transform.position;
+    }
+
+    void CreateEnemy()
+    {
+        var e = Instantiate(enemy);
+        e.transform.position = RandomPos();
+        GetComponent<MouseLockOnShooting>().enemies.Add(e);
+
+        e.GetComponent<ControlEnemy>().player = player;
+    }
+
+    IEnumerator CreateEnemyCoroutine(int counts, float delaySeconds)
+    {
+        for (int i = 0; i < counts; i++)
+        {
+            CreateEnemy();
+            yield return new WaitForSeconds(delaySeconds);
+        }
     }
 }

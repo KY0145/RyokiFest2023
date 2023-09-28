@@ -34,7 +34,7 @@ public class movePlayer : MonoBehaviour
         standardDeg = transform.eulerAngles.y;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //加速用ベクトル
         float ac = 0;
@@ -95,20 +95,6 @@ public class movePlayer : MonoBehaviour
         }
 
         //前方移動
-        rb.velocity = ReturnDirection(transform.eulerAngles.y, velocity + ac, rb.velocity);
-    }
-
-
-    /// <summary>
-    /// プレイヤーが向いている方向のベクトルを返す
-    /// </summary>
-    /// <param name="yDeg">y軸の度数法での角度(=プレイヤーが向いている方向)</param>
-    /// <param name="mag">返すベクトルの大きさ</param>
-    /// <param name="playerPosition">プレイヤーの速度ベクトル</param>
-    public static Vector3 ReturnDirection(float yDeg, float mag, Vector3 playerVector3)
-    {
-        yDeg = yDeg * Mathf.PI / 180;
-
-        return new Vector3(Mathf.Sin(yDeg) * mag, playerVector3.y, Mathf.Cos(yDeg) * mag);
+        rb.velocity = CalcVector.ReturnDirection(transform.eulerAngles.y, velocity + ac, rb.velocity);
     }
 }

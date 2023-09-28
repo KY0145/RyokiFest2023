@@ -18,6 +18,6 @@ public class MoveCamera : MonoBehaviour
     {
         transform.eulerAngles += new Vector3(0, player.transform.eulerAngles.y, 0);
 
-        transform.position = player.transform.position + movePlayer.ReturnDirection(player.transform.eulerAngles.y, movingPos.z, movingPos);
+        transform.position = player.transform.position + CalcVector.ReturnDirection(player.transform.eulerAngles.y, movingPos.z, movingPos);
     }
 }

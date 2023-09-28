@@ -23,6 +23,9 @@ public class EnemyParam : ScriptableObject
     [Header("弾丸が追尾する")]
     public bool isTracing;
 
+    [Header("弾丸が追尾する場合、弾丸が生成されてから何フレーム追尾するか")]
+    public int tracingFrames;
+
     [Header("弾丸")]
     public GameObject bullet;
 }

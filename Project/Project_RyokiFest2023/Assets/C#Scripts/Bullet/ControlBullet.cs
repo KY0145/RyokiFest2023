@@ -27,8 +27,14 @@ public class ControlBullet : MonoBehaviour
     [Header("弾丸が目標を追尾する")]
     [SerializeField] private bool isTracing;
 
+    private int tracingFrames;
+    private int nowFrame = 0;
+
     [Header("目標エネミーが消えた時、一緒に弾丸も消える")]
     [SerializeField] private bool isDestroyWhenEnemyIsDestroied;
+
+    [Header("プレイヤーからどのくらい離れたら消えるか")]
+    [SerializeField] private float destroyDis;
 
     /// <summary>
     /// プレイヤーのゲームオブジェクト
@@ -37,23 +43,24 @@ public class ControlBullet : MonoBehaviour
 
 
 
-    public void SetValues(GameObject enemy, float bulletSpd, GameObject player, float power, bool isTracing)
+    public void SetValues(GameObject enemy, float bulletSpd, GameObject player, float power, bool isTracing, int tracingFrames)
     {
         this.enemy = enemy;
         this.bulletSpd = bulletSpd;
         this.player = player;
         this.power = power;
         this.isTracing = isTracing;
+        this.tracingFrames = tracingFrames;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if ((player.transform.position - gameObject.transform.position).magnitude > 100)
+        if ((player.transform.position - gameObject.transform.position).magnitude > destroyDis)
         {
             Destroy(gameObject);
         }
 
-        if (enemy != null && isTracing)
+        if (enemy != null && isTracing && nowFrame < tracingFrames)
         {
             //方向ベクトル
             Vector3 blToEnemy = enemy.transform.position - transform.position;
@@ -61,13 +68,15 @@ public class ControlBullet : MonoBehaviour
             //敵の方角へ進む
             GetComponent<Rigidbody>().velocity = blToEnemy / blToEnemy.magnitude * bulletSpd;
         }
-        else
+        else if (enemy == null)
         {
             if(isDestroyWhenEnemyIsDestroied)
             {
                 Destroy(gameObject);
             }
         }
+
+        nowFrame++;
     }
 
     private void OnCollisionEnter(Collision collision)
