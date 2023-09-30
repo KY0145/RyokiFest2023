@@ -13,8 +13,10 @@ public class GameSystem : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void EndGame()
     {
-        
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
