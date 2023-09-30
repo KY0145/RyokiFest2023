@@ -9,7 +9,7 @@ using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCou
 /// </summary>
 public class RandomCreateEnemy : MonoBehaviour
 {
-    [SerializeField] GameObject mainCamera;
+    //[SerializeField] GameObject mainCamera;
     [SerializeField] GameObject player;
     [SerializeField] GameObject enemy;
 
@@ -39,15 +39,15 @@ public class RandomCreateEnemy : MonoBehaviour
         float y = Random.Range(y_range[0], y_range[1]);
         float z = Random.Range(z_range[0], z_range[1]);
 
-        Vector3 result = CalcVector.Rotate(new Vector3(x, y, z), -standardObj.transform.eulerAngles.y * Mathf.PI / 180);
+        //Vector3 result = CalcVector.Rotate(new Vector3(x, y, z), -standardObj.transform.eulerAngles.y * Mathf.PI / 180);
 
-        return result + standardObj.transform.position;
+        return new Vector3(x, y, z) + standardObj.transform.position;
     }
 
     void CreateEnemy()
     {
         var e = Instantiate(enemy);
-        e.transform.position = RandomPos(mainCamera);
+        e.transform.position = RandomPos(player);
         GetComponent<MouseLockOnShooting>().enemies.Add(e);
 
         e.GetComponent<ControlEnemy>().player = player;
