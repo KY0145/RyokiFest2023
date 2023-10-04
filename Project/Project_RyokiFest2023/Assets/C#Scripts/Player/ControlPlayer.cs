@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ControlPlayer : MonoBehaviour
 {
     public float HP;
+    [SerializeField] private TMP_Text hpText;
 
     void Start()
     {
@@ -19,5 +21,7 @@ public class ControlPlayer : MonoBehaviour
             gameObject.SetActive(false);
             SceneManager.LoadScene("Title");
         }
+
+        hpText.SetText("HP : " + HP);
     }
 }
