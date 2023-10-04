@@ -54,6 +54,12 @@ public class MouseLockOnShooting : MonoBehaviour
 
     void Update()
     {
+        //Tを押すと発射方法切り替え（デバッグ用）
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            isRensya = !isRensya;
+        }
+
         Vector4 plane = EquationPlane(player.transform.position, player.transform.position + CalcVector.ReturnDirection(player.transform.eulerAngles.y + 90, 1, Vector3.zero), player.transform.position + new Vector3(0,1,0));
 
         targetEnemiesList = new List<GameObject>();

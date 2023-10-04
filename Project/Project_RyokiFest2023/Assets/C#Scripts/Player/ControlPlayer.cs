@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ControlPlayer : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class ControlPlayer : MonoBehaviour
         if (HP <= 0)
         {
             gameObject.SetActive(false);
+            SceneManager.LoadScene("Title");
         }
     }
 }
