@@ -150,7 +150,7 @@ MonoBehaviour:
   enemyParam: {fileID: 11400000, guid: 60734bc3b3ada674580d401cbbcf6472, type: 2}
   spawnDis: 10000
   doDis: 150
-  force: 10
+  force: 5
   rotateDis: 2
   limitVelo: 30
   roopCount: 5
