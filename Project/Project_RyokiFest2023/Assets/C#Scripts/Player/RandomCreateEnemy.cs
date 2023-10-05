@@ -9,29 +9,27 @@ public class RandomCreateEnemy : MonoBehaviour
 {
     //[SerializeField] GameObject mainCamera;
     [SerializeField] GameObject player;
-    [SerializeField] GameObject enemy;
 
-    [Header("x座標の範囲（最小値,最大値）")]
-    [SerializeField]
-    float[] x_range = new float[2];
+    //空中の敵
+    [SerializeField] GameObject[] airEnemies;
+    [SerializeField] EnemyParam airEnemyParam;
 
-    [Header("y座標の範囲（最小値,最大値）")]
-    [SerializeField]
-    float[] y_range = new float[2];
+    //地上の敵
+    [SerializeField] GameObject[] landEnemies;
+    [SerializeField] EnemyParam landEnemyParam;
 
-    [Header("z座標の範囲（最小値,最大値）")]
-    [SerializeField]
-    float[] z_range = new float[2];
+
 
     void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(CreateEnemyCoroutine(30, 2));
+            StartCoroutine(CreateEnemyCoroutine(airEnemies, airEnemyParam, 30, 2));
+            StartCoroutine(CreateEnemyCoroutine(landEnemies, landEnemyParam, 30, 10));
         }
     }
 
-    Vector3 RandomPos(GameObject standardObj)
+    Vector3 RandomPos(GameObject standardObj, float[] x_range, float[] y_range, float[] z_range)
     {
         float x = Random.Range(x_range[0], x_range[1]);
         float y = Random.Range(y_range[0], y_range[1]);
@@ -42,20 +40,20 @@ public class RandomCreateEnemy : MonoBehaviour
         return new Vector3(x, y, z) + standardObj.transform.position;
     }
 
-    void CreateEnemy()
+    void CreateEnemy(GameObject[] enemies, EnemyParam enemyParam)
     {
-        var e = Instantiate(enemy);
-        e.transform.position = RandomPos(player);
+        var e = Instantiate(enemies[Random.Range(0, enemies.Length)]);
+        e.transform.position = RandomPos(player, enemyParam.x_range, enemyParam.y_range, enemyParam.z_range);
         GetComponent<MouseLockOnShooting>().enemies.Add(e);
 
         e.GetComponent<ControlEnemy>().player = player;
     }
 
-    IEnumerator CreateEnemyCoroutine(int counts, float delaySeconds)
+    IEnumerator CreateEnemyCoroutine(GameObject[] enemies, EnemyParam enemyParam, int counts, float delaySeconds)
     {
         for (int i = 0; i < counts; i++)
         {
-            CreateEnemy();
+            CreateEnemy(enemies, enemyParam);
             yield return new WaitForSeconds(delaySeconds);
         }
     }

@@ -28,4 +28,33 @@ public class EnemyParam : ScriptableObject
 
     [Header("弾丸")]
     public GameObject bullet;
+
+
+    [Header("見えるようになる距離")]
+    public float spawnDis;
+
+    [Header("行動を始める距離")]
+    public float doDis;
+
+    [Header("加える力の大きさ")]
+    public float force;
+
+    [Header("次の地点に進み始める距離")]
+    public float rotateDis;
+
+    [Header("制限速度")]
+    public float limitVelo;
+
+    [Header("攻撃する回数")]
+    public int roopCount;
+
+    [Header("x座標の範囲（最小値,最大値）")]
+    public float[] x_range = new float[2];
+
+    [Header("y座標の範囲（最小値,最大値）")]
+    public float[] y_range = new float[2];
+
+    [Header("z座標の範囲（最小値,最大値）")]
+    public float[] z_range = new float[2];
+
 }

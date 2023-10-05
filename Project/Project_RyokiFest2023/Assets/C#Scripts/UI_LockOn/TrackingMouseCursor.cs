@@ -9,6 +9,7 @@ public class TrackingMouseCursor : MonoBehaviour
 {
     [SerializeField] Camera mainCamera;
     [SerializeField] GameObject player;
+    [SerializeField] Vector2 adjustment;
 
 
     void Update()
@@ -30,6 +31,6 @@ public class TrackingMouseCursor : MonoBehaviour
         //照準のUIの位置を計算
         RectTransformUtility.ScreenPointToLocalPointInRectangle(GetComponent<RectTransform>().parent.GetComponent<RectTransform>(), screenPos, null, out var UIPos);
 
-        transform.localPosition = UIPos;
+        transform.localPosition = UIPos + adjustment;
     }
 }

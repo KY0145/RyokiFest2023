@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6596ad548359d4ea8515093f07c959, type: 3}
+  m_Name: airEnemyParam
+  m_EditorClassIdentifier: 
+  HP: 1
+  power: 1
+  createPos: {x: 2, y: 2, z: 2}
+  bulletSpd: 40
+  isTracing: 1
+  tracingFrames: 100
+  bullet: {fileID: 4767116969241487499, guid: 27d18e0ce7c7cd348b233f5f56609b99, type: 3}
+  spawnDis: 10000
+  doDis: 150
+  force: 5
+  rotateDis: 2
+  limitVelo: 30
+  roopCount: 5
+  x_range:
+  - -25
+  - 25
+  y_range:
+  - 5
+  - 15
+  z_range:
+  - 150
+  - 400

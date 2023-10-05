@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class ControlPlayer : MonoBehaviour
 {
-    public float HP;
+    public float maxHP;
+    [HideInInspector] public float HP;
     [SerializeField] private TMP_Text hpText;
 
     void Start()
     {
-        
+        HP = maxHP;
     }
 
     void Update()

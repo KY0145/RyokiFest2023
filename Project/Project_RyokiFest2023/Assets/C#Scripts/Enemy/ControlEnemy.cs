@@ -11,24 +11,32 @@ public class ControlEnemy : MonoBehaviour
 
     [SerializeField] private EnemyParam enemyParam;
 
-    [Header("見えるようになる距離")]
-    [SerializeField] private float spawnDis;
 
-    [Header("行動を始める距離")]
-    [SerializeField] private float doDis;
+    private float power = 1f;
 
-    [Header("加える力の大きさ")]
-    [SerializeField] private float force;
+    private Vector3 createPos;
 
-    [Header("次の地点に進み始める距離")]
-    [SerializeField] private float rotateDis;
+    private float bulletSpd;
 
-    [Header("制限速度")]
-    [SerializeField] private float limitVelo;
+    private bool isTracing;
 
-    [Header("攻撃する回数")]
-    [SerializeField] private int roopCount;
-    
+    private int tracingFrames;
+
+    private GameObject bullet;
+
+
+    private float spawnDis;
+
+    private float doDis;
+
+    private float force;
+
+    private float rotateDis;
+
+     private float limitVelo;
+
+    private int roopCount;
+
     [Header("移動する地点")]
     [SerializeField] private Vector3[] points;
 
@@ -47,6 +55,19 @@ public class ControlEnemy : MonoBehaviour
     void Start()
     {
         HP = enemyParam.HP;
+        power = enemyParam.power;
+        createPos = enemyParam.createPos;
+        bulletSpd = enemyParam.bulletSpd;
+        isTracing = enemyParam.isTracing;
+        tracingFrames = enemyParam.tracingFrames;
+        bullet = enemyParam.bullet;
+
+        spawnDis = enemyParam.spawnDis;
+        doDis = enemyParam.doDis;
+        force = enemyParam.force;
+        rotateDis = enemyParam.rotateDis;
+        limitVelo = enemyParam.limitVelo;
+        roopCount = enemyParam.roopCount;
 
         rb = GetComponent<Rigidbody>();
 
@@ -123,21 +144,19 @@ public class ControlEnemy : MonoBehaviour
     /// </summary>
     /// <param name="player">プレイヤーのゲームオブジェクト</param>
     /// <param name="enemy">敵のゲームオブジェクト</param>
-    /// <param name="createPos">弾丸を作成する位置座標（プレイヤーを原点としたローカル座標）</param>
-    /// <param name="bulletSpd">弾丸の速度</param>
     void Fire(GameObject player, GameObject enemy)
     {
         //弾丸を生成
-        GameObject bl = Instantiate(enemyParam.bullet);
+        GameObject bl = Instantiate(bullet);
 
         //座標を修正
-        bl.transform.position = player.transform.position + enemyParam.createPos;
+        bl.transform.position = player.transform.position + createPos;
 
-        bl.GetComponent<ControlBullet>().SetValues(enemy, enemyParam.bulletSpd, player, enemyParam.power, enemyParam.isTracing, enemyParam.tracingFrames);
+        bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, player, power, isTracing, tracingFrames);
 
         Vector3 blToEnemy = enemy.transform.position - player.transform.position;
 
-        bl.GetComponent<Rigidbody>().velocity = blToEnemy / blToEnemy.magnitude * enemyParam.bulletSpd;
+        bl.GetComponent<Rigidbody>().velocity = blToEnemy / blToEnemy.magnitude * bulletSpd;
     }
 
     IEnumerator FireCoroutine(int counts)
