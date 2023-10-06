@@ -14,6 +14,8 @@ public class ControlEnemy : MonoBehaviour
 
     private float power = 1f;
 
+    private float bodyPower = 0f;
+
     private Vector3 createPos;
 
     private float bulletSpd;
@@ -56,6 +58,7 @@ public class ControlEnemy : MonoBehaviour
     {
         HP = enemyParam.HP;
         power = enemyParam.power;
+        bodyPower = enemyParam.bodyPower;
         createPos = enemyParam.createPos;
         bulletSpd = enemyParam.bulletSpd;
         isTracing = enemyParam.isTracing;
@@ -104,6 +107,16 @@ public class ControlEnemy : MonoBehaviour
         if (HP <= 0)
         {
             DestroyMe();
+        }
+    }
+
+
+    //プレイヤーと衝突したときにダメージを与える
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject == player)
+        {
+            collision.gameObject.GetComponent<ControlPlayer>().HP -= bodyPower;
         }
     }
 

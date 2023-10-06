@@ -14,6 +14,9 @@ public class EnemyParam : ScriptableObject
     [Header("攻撃力")]
     public float power = 1f;
 
+    [Header("プレイヤーと衝突時に与えるダメージ")]
+    public float bodyPower = 0f;
+
     [Header("弾丸生成位置")]
     public Vector3 createPos;
 

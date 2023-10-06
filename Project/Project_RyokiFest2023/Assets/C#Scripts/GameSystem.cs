@@ -12,6 +12,11 @@ public class GameSystem : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
+    public void BackTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
     // Update is called once per frame
     public void EndGame()
     {

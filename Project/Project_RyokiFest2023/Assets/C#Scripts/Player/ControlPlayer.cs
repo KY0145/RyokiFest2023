@@ -10,6 +10,11 @@ public class ControlPlayer : MonoBehaviour
     [HideInInspector] public float HP;
     [SerializeField] private TMP_Text hpText;
 
+    [Header("この値よりy座標が小さいと毎フレームダメージを受ける")]
+    [SerializeField] private float y_min;
+
+    [SerializeField] private GameObject ResultPanel;
+
     void Start()
     {
         HP = maxHP;
@@ -18,10 +23,24 @@ public class ControlPlayer : MonoBehaviour
     void Update()
     {
         //HPが0のとき、Rを押すとタイトルに戻る
-        if (HP <= 0 && Input.GetKeyDown(KeyCode.R))
+        if (HP <= 0)
         {
-            gameObject.SetActive(false);
-            SceneManager.LoadScene("Title");
+            //プレイヤーのやられアニメーション
+            GetComponent<Animator>().SetBool("Death", true);
+
+            //移動を制限
+            GetComponent<movePlayer>().enabled = false;
+
+            //ゲームオーバーになったらリザルト画面を表示
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.5)
+            {
+                ResultPanel.SetActive(true);
+            }
+        }
+
+        if (transform.position.y < y_min)
+        {
+            HP--;
         }
 
         hpText.SetText("HP : " + HP);

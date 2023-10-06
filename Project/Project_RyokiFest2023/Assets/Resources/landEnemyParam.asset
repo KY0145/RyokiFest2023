@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 3
   power: 1
+  bodyPower: 10
   createPos: {x: 0, y: 2, z: 0}
   bulletSpd: 0
   isTracing: 0
   tracingFrames: 0
   bullet: {fileID: 4767116969241487499, guid: 27d18e0ce7c7cd348b233f5f56609b99, type: 3}
   spawnDis: 10000
-  doDis: 150
-  force: 1000
+  doDis: 200
+  force: 10000000
   rotateDis: 2
   limitVelo: 25
   roopCount: 0
