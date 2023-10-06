@@ -17,7 +17,8 @@ public class ControlPlayer : MonoBehaviour
 
     void Update()
     {
-        if (HP <= 0)
+        //HPが0のとき、Rを押すとタイトルに戻る
+        if (HP <= 0 && Input.GetKeyDown(KeyCode.R))
         {
             gameObject.SetActive(false);
             SceneManager.LoadScene("Title");
