@@ -6,8 +6,25 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class CreateUI_LockOn : Graphic
 {
+    [SerializeField] private GameObject player;
+
+    [SerializeField] private Color32 normalColor;
+    [SerializeField] private Color32 lockonColor;
+
+
     private void Update()
     {
+        bool bl = player.GetComponent<MouseLockOnShooting>().targetEnemiesList.Count != 0;
+
+        if (bl)
+        {
+            SetColor(lockonColor);
+        }
+        else
+        {
+            SetColor(normalColor);
+        }
+
         SetVerticesDirty();
     }
 
@@ -91,5 +108,13 @@ public class CreateUI_LockOn : Graphic
         vh.AddTriangle(7, 2, 3);
         vh.AddTriangle(0, 4, 7);
         vh.AddTriangle(0, 7, 3);
+    }
+
+    private void SetColor(Color32 color)
+    {
+        for (int i = 0; i < vertexInfos.Length; ++i)
+        {
+            vertexInfos[i].color = color;
+        }
     }
 }

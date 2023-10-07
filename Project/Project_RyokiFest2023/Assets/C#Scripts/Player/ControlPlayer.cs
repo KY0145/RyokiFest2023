@@ -25,6 +25,9 @@ public class ControlPlayer : MonoBehaviour
         //HPが0のとき、Rを押すとタイトルに戻る
         if (HP <= 0)
         {
+            Vector3 v = GetComponent<Rigidbody>().velocity;
+            v = new Vector3(0, v.y, 0);
+
             //プレイヤーのやられアニメーション
             GetComponent<Animator>().SetBool("Death", true);
 

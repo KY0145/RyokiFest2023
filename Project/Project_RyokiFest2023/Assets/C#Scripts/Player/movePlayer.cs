@@ -16,11 +16,15 @@ public class movePlayer : MonoBehaviour
     [Header("回転速度")]
     [SerializeField] private float rotateSpd;
 
+    [Header("ジャンプ時に与える力の大きさ")]
+    [SerializeField] private float jumpForce;
+
+    [Header("y座標の上限値")]
+    [SerializeField] private float y_limit;
+
     [Header("基準角度")]
     public float standardDeg;
 
-    [Header("タイヤが回転する角度")]
-    [SerializeField] private float tyreRotatDeg;
 
     /// <summary>
     /// 例えば60ならば、基準角度を0として左右60度までに制限される
@@ -30,54 +34,42 @@ public class movePlayer : MonoBehaviour
     [Header("制限角度(度数法)")]
     [SerializeField] private float limit_Deg;
 
-    /// <summary>
-    /// 前側のタイヤ
-    /// </summary>
-    private GameObject leftFrontTyre;
-    private GameObject rightFrontTyre;
+    private Animator animator;
 
-    private Vector3 leftFrontDeg;
-    private Vector3 rightFrontDeg;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         standardDeg = transform.eulerAngles.y;
-
-        //タイヤを探す
-        leftFrontTyre = transform.Find("左前タイヤ").gameObject;
-        rightFrontTyre = transform.Find("右前タイヤ").gameObject;
-
-        //タイヤの角度を保存
-        leftFrontDeg = leftFrontTyre.transform.eulerAngles;
-        rightFrontDeg = rightFrontTyre.transform.eulerAngles;
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate()
     {
+        //アニメーション遷移用bool
+        bool right = false;
+        bool left = false;
+
         //加速用ベクトル
         float ac = 0;
 
         //加速用ベクトルに値を設定
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
         {
             ac = accelerator;
         }
-
-        //タイヤ回転用変数
-        float tyreRotation = 0;
 
         //方向変更
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) 
         {
             transform.eulerAngles -= new Vector3(0,rotateSpd,0);
-            tyreRotation -= tyreRotatDeg;
+            left = true;
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             transform.eulerAngles += new Vector3(0, rotateSpd, 0);
-            tyreRotation += tyreRotatDeg;
+            right = true;
         }
 
 
@@ -114,19 +106,36 @@ public class movePlayer : MonoBehaviour
         if (isInRange(transform.eulerAngles.y, clamp(standardDeg + limit_Deg), clamp(standardDeg + 180)))
         {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, standardDeg + limit_Deg, transform.eulerAngles.z);
-            tyreRotation = 0;
+            right = false;
         }
         else if (isInRange(transform.eulerAngles.y, clamp(standardDeg - 180), clamp(standardDeg - limit_Deg)))
         {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, standardDeg - limit_Deg, transform.eulerAngles.z);
-            tyreRotation = 0;
+            left = false;
         }
 
         //タイヤの角度変更
-        leftFrontTyre.transform.eulerAngles = leftFrontDeg + new Vector3(0, tyreRotation, 0) + new Vector3(0, transform.eulerAngles.y, 0);
-        rightFrontTyre.transform.eulerAngles = rightFrontDeg + new Vector3(0, tyreRotation, 0) + new Vector3(0, transform.eulerAngles.y, 0);
+        animator.SetBool("Right", right);
+        animator.SetBool("Left", left);
 
         //前方移動
         rb.velocity = CalcVector.ReturnDirection(transform.eulerAngles.y, velocity + ac, rb.velocity);
+
+
+        //ジャンプ
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rb.AddForce(new Vector3(0, jumpForce, 0));
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        }
+        //y座標制限
+        if (transform.position.y > y_limit)
+        {
+            transform.position = new Vector3(transform.position.x, y_limit, transform.position.z);
+            rb.AddForce(new Vector3(0, -jumpForce, 0));
+        }
     }
 }
