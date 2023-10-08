@@ -60,4 +60,7 @@ public class EnemyParam : ScriptableObject
     [Header("z座標の範囲（最小値,最大値）")]
     public float[] z_range = new float[2];
 
+    [Header("やられたときに加算されるスコア")]
+    public float score;
+
 }

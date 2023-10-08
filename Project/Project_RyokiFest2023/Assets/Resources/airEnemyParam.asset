@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 1
   power: 1
+  bodyPower: 0
   createPos: {x: 2, y: 2, z: 2}
   bulletSpd: 40
   isTracing: 1
@@ -34,3 +35,4 @@ MonoBehaviour:
   z_range:
   - 150
   - 400
+  score: 1

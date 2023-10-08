@@ -51,8 +51,17 @@ public class MouseLockOnShooting : MonoBehaviour
     public List<GameObject> targetEnemiesList;
 
 
+    public int frame = 0;
 
-    void Update()
+    //攻撃の種類を識別するための整数
+    [SerializeField] private enum typeOfAttack
+    {
+        NORMAL
+    }
+
+
+
+    void FixedUpdate()
     {
         //Tを押すと発射方法切り替え（デバッグ用）
         if (Input.GetKeyDown(KeyCode.T))
@@ -100,16 +109,19 @@ public class MouseLockOnShooting : MonoBehaviour
             //発射
             if (isRensya)
             {
-                Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd, true);
+                Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd, true, 1, (int)typeOfAttack.NORMAL);
             }
             else
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd, true);
+                    Fire(player, targetEnemiesList[index], bulletCreatePos_playerLocal, bulletSpd, true, frame, (int)typeOfAttack.NORMAL);
                 }
             }
         }
+
+        //フレームを一つ増やす
+        frame++;
     }
 
 
@@ -139,15 +151,34 @@ public class MouseLockOnShooting : MonoBehaviour
     /// <param name="enemy">敵のゲームオブジェクト</param>
     /// <param name="createPos">弾丸を作成する位置座標（プレイヤーを原点としたローカル座標）</param>
     /// <param name="bulletSpd">弾丸の速度</param>
-    void Fire(GameObject player, GameObject enemy, Vector3 createPos, float bulletSpd, bool isTracing)
+    void Fire(GameObject player, GameObject enemy, Vector3 createPos, float bulletSpd, bool isTracing, int frame, int type)
     {
-        //弾丸を生成
-        GameObject bl = Instantiate(bullet);
+        if (frame <= 0)
+        {
+            return;
+        }
 
-        //座標を修正
-        bl.transform.position = player.transform.position + createPos;
+        if (type == 0)
+        {
+            //弾丸を生成
+            GameObject bl = Instantiate(bullet);
 
-        bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject, power, isTracing, int.MaxValue);
+            //座標を修正
+            bl.transform.position = player.transform.position + createPos;
+
+            bl.GetComponent<ControlBullet>().SetValues(enemy, bulletSpd, gameObject, power, isTracing, int.MaxValue);
+
+            //0.1秒(=6フレーム)クールダウン
+            this.frame = -6;
+        }
+        else if (type == 1)
+        {
+
+        }
+        else if (type == 2)
+        {
+             
+        }
     }
 
 

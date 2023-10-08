@@ -10,6 +10,8 @@ public class RandomCreateEnemy : MonoBehaviour
     //[SerializeField] GameObject mainCamera;
     [SerializeField] GameObject player;
 
+    [SerializeField] GameObject scoreManager;
+
     //空中の敵
     [SerializeField] GameObject[] airEnemies;
     [SerializeField] EnemyParam airEnemyParam;
@@ -47,6 +49,7 @@ public class RandomCreateEnemy : MonoBehaviour
         GetComponent<MouseLockOnShooting>().enemies.Add(e);
 
         e.GetComponent<ControlEnemy>().player = player;
+        e.GetComponent<ControlEnemy>().scoreManager = scoreManager;
     }
 
     IEnumerator CreateEnemyCoroutine(GameObject[] enemies, EnemyParam enemyParam, int counts, float delaySeconds)

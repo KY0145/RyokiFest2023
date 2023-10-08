@@ -11,6 +11,8 @@ public class ControlEnemy : MonoBehaviour
 
     [SerializeField] private EnemyParam enemyParam;
 
+    public GameObject scoreManager;
+
 
     private float power = 1f;
 
@@ -38,6 +40,8 @@ public class ControlEnemy : MonoBehaviour
      private float limitVelo;
 
     private int roopCount;
+
+    private float score;
 
     [Header("移動する地点")]
     [SerializeField] private Vector3[] points;
@@ -71,6 +75,7 @@ public class ControlEnemy : MonoBehaviour
         rotateDis = enemyParam.rotateDis;
         limitVelo = enemyParam.limitVelo;
         roopCount = enemyParam.roopCount;
+        score = enemyParam.score;
 
         rb = GetComponent<Rigidbody>();
 
@@ -106,7 +111,7 @@ public class ControlEnemy : MonoBehaviour
 
         if (HP <= 0)
         {
-            DestroyMe();
+            DestroyMe(score);
         }
     }
 
@@ -117,12 +122,14 @@ public class ControlEnemy : MonoBehaviour
         if (collision.gameObject == player)
         {
             collision.gameObject.GetComponent<ControlPlayer>().HP -= bodyPower;
+            DestroyMe(0);
         }
     }
 
 
-    private void DestroyMe()
+    private void DestroyMe(float score)
     {
+        scoreManager.GetComponent<ScoreManager>().AddScore(score);
         player.GetComponent<MouseLockOnShooting>().enemies.Remove(gameObject);
         Destroy(gameObject);
     }
@@ -148,7 +155,7 @@ public class ControlEnemy : MonoBehaviour
 
         if (I >= points.Length)
         {
-            DestroyMe();
+            DestroyMe(0);
         }
     }
 
