@@ -15,6 +15,13 @@ public class ControlPlayer : MonoBehaviour
 
     [SerializeField] private GameObject ResultPanel;
 
+    [SerializeField] private GameObject explosion;
+
+    /// <summary>
+    /// 2回以上爆発が起きないようにするbool
+    /// </summary>
+    private bool oneTime = true;
+
     void Start()
     {
         HP = maxHP;
@@ -28,6 +35,13 @@ public class ControlPlayer : MonoBehaviour
             Vector3 v = GetComponent<Rigidbody>().velocity;
             v = new Vector3(0, v.y, 0);
 
+            if (oneTime)
+            {
+                //プレイヤーの爆発
+                explosion.GetComponent<ParticleSystem>().Play();
+                oneTime = false;
+            }
+
             //プレイヤーのやられアニメーション
             GetComponent<Animator>().SetBool("Death", true);
 
@@ -35,7 +49,8 @@ public class ControlPlayer : MonoBehaviour
             GetComponent<movePlayer>().enabled = false;
 
             //ゲームオーバーになったらリザルト画面を表示
-            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.5)
+            if (GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name == "Player_DeathAnimation"
+                && GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.5)
             {
                 ResultPanel.SetActive(true);
             }
