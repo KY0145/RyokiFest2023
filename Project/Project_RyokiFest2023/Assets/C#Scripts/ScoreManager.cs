@@ -5,10 +5,22 @@ using System.IO;
 using UnityEditor;
 using TMPro;
 using System;
+using System.Linq;
+
 
 [Serializable]
 public class ScoreManager : MonoBehaviour
 {
+    /// <summary>
+    /// データをすべて消す
+    /// </summary>
+    [SerializeField] private bool isReset;
+
+    /// <summary>
+    /// 現在スコアを1度だけセーブするための変数
+    /// </summary>
+    public bool isFirstTime = true;
+
     /// <summary>
     /// ファイルパス
     /// </summary>
@@ -22,7 +34,7 @@ public class ScoreManager : MonoBehaviour
     /// <summary>
     /// スコアを表示するテキストUI
     /// </summary>
-    [SerializeField] private GameObject scoreText;
+    [SerializeField] private GameObject[] scoreText;
 
     /// <summary>
     /// scoreTextの親オブジェクトになっているパネルUI
@@ -75,14 +87,46 @@ public class ScoreManager : MonoBehaviour
     {
         if (panel.activeSelf)
         {
-            string str = "";
-            foreach (var s in scoreData.scores)
+            if (isFirstTime)
             {
-                str += "," + s.ToString();
+                scoreData.scores.Add(score);
+                isFirstTime = false;
             }
-            str += "," + score;
-            scoreText.GetComponent<TMP_Text>().SetText(str);
+            var scores = scoreData.scores;
+            scores = scores.OrderByDescending(a => a).ToList(); //降順にソート
+
+            int pre_i = 0;
+            for (int i0 = 0; i0 < scoreText.Length; i0++)
+            {
+                string str = "";
+                for (int i = i0 * 8; i < (i0 + 1) * 8; i++)
+                {
+                    if (i >= scores.Count || i >= 40)
+                    {
+                        break;
+                    }
+
+                    if (scores[i] != scores[pre_i])
+                    {
+                        pre_i = i;
+                    }
+
+                    var str_addend = "";
+                    if (scores[i] == score)
+                    {
+                        str_addend = "<color=\"red\">" + (pre_i + 1) + "位 : " + scores[i] + Environment.NewLine + "</color>";
+                    }
+                    else
+                    {
+                        str_addend = "<color=\"black\">" + (pre_i + 1) + "位 : " + scores[i] + Environment.NewLine + "</color>";
+                    }
+
+                    str += str_addend;
+                }
+                scoreText[i0].GetComponent<TMP_Text>().SetText(str);
+            }
         }
+
     }
 
 
@@ -124,8 +168,14 @@ public class ScoreManager : MonoBehaviour
     // シーン遷移後に保存
     void OnDestroy()
     {
-        scoreData.scores.Add(score);
-        Save(scoreData);
+        if (!isReset)
+        {
+            Save(scoreData);
+        }
+        else
+        {
+            Save(new ScoreData(new List<float>()));
+        }
     }
 
 }
