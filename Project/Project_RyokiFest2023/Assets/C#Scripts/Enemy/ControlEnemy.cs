@@ -127,7 +127,7 @@ public class ControlEnemy : MonoBehaviour
     }
 
 
-    private void DestroyMe(float score)
+    public void DestroyMe(float score)
     {
         scoreManager.GetComponent<ScoreManager>().AddScore(score);
         player.GetComponent<MouseLockOnShooting>().enemies.Remove(gameObject);

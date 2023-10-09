@@ -85,7 +85,24 @@ public class ControlBullet : MonoBehaviour
         {
             try
             {
-                collision.gameObject.GetComponent<ControlEnemy>().HP -= power;
+                var enemy = collision.gameObject;
+                if (player.name.Contains("Enemy"))
+                {
+                    var HP = enemy.GetComponent<ControlEnemy>().HP;
+                    HP -= power;
+                    if (HP <= 0)
+                    {
+                        enemy.GetComponent<ControlEnemy>().DestroyMe(0);
+                    }
+                    else
+                    {
+                        enemy.GetComponent<ControlEnemy>().HP = HP;
+                    }
+                }
+                else
+                {
+                    enemy.GetComponent<ControlEnemy>().HP -= power;
+                }
             }
             catch(NullReferenceException)
             {
