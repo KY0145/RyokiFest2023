@@ -32,9 +32,20 @@ public class ScoreManager : MonoBehaviour
     string fileName = "ScoreData.json";
 
     /// <summary>
+    /// scoreText一つあたりの行数
+    /// ランキング表示数＝一つ当たり行数*scoreTextの数
+    /// </summary>
+    [SerializeField] private int numOfLines;
+
+    /// <summary>
     /// スコアを表示するテキストUI
     /// </summary>
     [SerializeField] private GameObject[] scoreText;
+
+    /// <summary>
+    /// 結果を表示するテキストUI
+    /// </summary>
+    [SerializeField] private GameObject resultText;
 
     /// <summary>
     /// scoreTextの親オブジェクトになっているパネルUI
@@ -85,23 +96,23 @@ public class ScoreManager : MonoBehaviour
 
     private void Update()
     {
-        if (panel.activeSelf)
+        if (panel.activeSelf && isFirstTime)
         {
-            if (isFirstTime)
-            {
-                scoreData.scores.Add(score);
-                isFirstTime = false;
-            }
+            isFirstTime = false;
+
+            scoreData.scores.Add(score);
+
+            string resultStr = "";
             var scores = scoreData.scores;
             scores = scores.OrderByDescending(a => a).ToList(); //降順にソート
 
             int pre_i = 0;
             for (int i0 = 0; i0 < scoreText.Length; i0++)
             {
-                string str = "";
-                for (int i = i0 * 8; i < (i0 + 1) * 8; i++)
+                string scoreStr = "";
+                for (int i = i0 * numOfLines; i < (i0 + 1) * numOfLines; i++)
                 {
-                    if (i >= scores.Count || i >= 40)
+                    if (i >= scores.Count || i >= numOfLines * scoreText.Length)
                     {
                         break;
                     }
@@ -115,16 +126,18 @@ public class ScoreManager : MonoBehaviour
                     if (scores[i] == score)
                     {
                         str_addend = "<color=\"red\">" + (pre_i + 1) + "位 : " + scores[i] + Environment.NewLine + "</color>";
+                        resultStr = "あなたの結果は... " + "<size=150><color=\"red\">" + (pre_i + 1) + "位</size></color>です！";
                     }
                     else
                     {
                         str_addend = "<color=\"black\">" + (pre_i + 1) + "位 : " + scores[i] + Environment.NewLine + "</color>";
                     }
 
-                    str += str_addend;
+                    scoreStr += str_addend;
                 }
-                scoreText[i0].GetComponent<TMP_Text>().SetText(str);
+                scoreText[i0].GetComponent<TMP_Text>().SetText(scoreStr);
             }
+            resultText.GetComponent<TMP_Text>().SetText(resultStr);
         }
 
     }
