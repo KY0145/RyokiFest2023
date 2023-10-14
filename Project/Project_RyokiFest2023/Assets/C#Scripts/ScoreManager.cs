@@ -126,7 +126,7 @@ public class ScoreManager : MonoBehaviour
                     if (scores[i] == score)
                     {
                         str_addend = "<color=\"red\">" + (pre_i + 1) + "位 : " + scores[i] + Environment.NewLine + "</color>";
-                        resultStr = "あなたの結果は... " + "<size=150><color=\"red\">" + (pre_i + 1) + "位</size></color>です！";
+                        resultStr = "あなたの結果は... <size=150><color=\"red\">" + (pre_i + 1) + "位</size></color>です！";
                     }
                     else
                     {

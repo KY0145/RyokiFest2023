@@ -7,9 +7,11 @@ public class ControlEnemy : MonoBehaviour
     [Header("プレイヤー")]
     public GameObject player;
 
+    public GameObject stdPosPlayer;
+
     private Rigidbody rb;
 
-    [SerializeField] private EnemyParam enemyParam;
+    public EnemyParam enemyParam;
 
     public GameObject scoreManager;
 
@@ -40,6 +42,7 @@ public class ControlEnemy : MonoBehaviour
      private float limitVelo;
 
     private int roopCount;
+    private float roopSeconds;
 
     private float score;
 
@@ -75,25 +78,26 @@ public class ControlEnemy : MonoBehaviour
         rotateDis = enemyParam.rotateDis;
         limitVelo = enemyParam.limitVelo;
         roopCount = enemyParam.roopCount;
+        roopSeconds = enemyParam.roopSeconds;
         score = enemyParam.score;
 
         rb = GetComponent<Rigidbody>();
 
         //攻撃コルーチンを開始
-        StartCoroutine(FireCoroutine(roopCount));
+        StartCoroutine(FireCoroutine(roopCount, roopSeconds));
 
-        //デバッグ用に追加
+        //グローバル座標をプレイヤーを中心としたローカルに変換
         for (int i = 0; i < points.Length; i++)
         {
-            points[i] = CalcVector.Rotate(points[i], -player.transform.eulerAngles.y * Mathf.PI / 180);
-            points[i] += player.transform.position;
+            points[i] = CalcVector.Rotate(points[i], -stdPosPlayer.transform.eulerAngles.y * Mathf.PI / 180);
+            points[i] += stdPosPlayer.transform.position;
         }
     }
 
     void FixedUpdate()
     {
         //設定距離以上のときアクティブ化
-        if ((player.transform.position - transform.position).magnitude <= spawnDis)
+        if ((stdPosPlayer.transform.position - transform.position).magnitude <= spawnDis)
         {
             gameObject.SetActive(true);
         }
@@ -103,7 +107,7 @@ public class ControlEnemy : MonoBehaviour
         }
 
         //設定距離以上のとき行動する
-        if ((player.transform.position - transform.position).magnitude <= doDis)
+        if ((stdPosPlayer.transform.position - transform.position).magnitude <= doDis)
         {
             //移動
             Move();
@@ -142,6 +146,10 @@ public class ControlEnemy : MonoBehaviour
 
         rb.AddForce(direction * force);
 
+        //向きを修正
+        transform.eulerAngles = Vector3.zero;
+        transform.eulerAngles = ReturnEulerDeg(direction, transform.eulerAngles);
+
         //制限速度を超えた時は修正
         if (rb.velocity.magnitude > limitVelo)
         {
@@ -179,12 +187,42 @@ public class ControlEnemy : MonoBehaviour
         bl.GetComponent<Rigidbody>().velocity = blToEnemy / blToEnemy.magnitude * bulletSpd;
     }
 
-    IEnumerator FireCoroutine(int counts)
+    /// <summary>
+    /// 攻撃をループ
+    /// </summary>
+    /// <param name="counts">攻撃回数</param>
+    /// <param name="seconds">攻撃間隔</param>
+    IEnumerator FireCoroutine(int counts, float seconds)
     {
         for (int i = 0; i < counts; i++)
         {
             Fire(gameObject, player);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(seconds);
         }
+    }
+
+
+    /// <summary>
+    /// プレイヤーからベクトルbへのオイラー角度を求める
+    /// </summary>
+    /// <param name="b">目標ベクトル</param>
+    /// <param name="eulerAngles">元のオイラー角</param>
+    /// <returns>オイラー角度をVector3で返す</returns>
+    Vector3 ReturnEulerDeg(Vector3 b, Vector3 eulerAngles)
+    {
+        var a = CalcVector.ReturnDirection(eulerAngles.y, 1, Vector3.zero);
+
+        var a_xz = new Vector2(a.x, a.z);
+        var b_xz = new Vector2(b.x, b.z);
+        var yDeg = -CalcVector.CalcVecRad(a_xz, b_xz, true) * 180 / Mathf.PI;
+
+        a = CalcVector.ReturnDirection(eulerAngles.y + yDeg, 1, Vector3.zero);
+
+        var a_zy = new Vector2(a.z, a.y);
+        var b_zy = new Vector2(b.z, b.y);
+        var xDeg = CalcVector.CalcVecRad(a_zy, b_zy, true) * 180 / Mathf.PI;
+
+
+        return new Vector3(eulerAngles.x + xDeg, eulerAngles.y + yDeg, eulerAngles.z);
     }
 }

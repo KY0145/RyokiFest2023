@@ -51,6 +51,9 @@ public class EnemyParam : ScriptableObject
     [Header("攻撃する回数")]
     public int roopCount;
 
+    [Header("攻撃の間隔(秒)")]
+    public float roopSeconds;
+
     [Header("x座標の範囲（最小値,最大値）")]
     public float[] x_range = new float[2];
 

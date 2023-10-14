@@ -10,29 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c6596ad548359d4ea8515093f07c959, type: 3}
-  m_Name: airEnemyParam
+  m_Name: AirEnemyParam
   m_EditorClassIdentifier: 
-  HP: 1
+  HP: 2
   power: 1
-  bodyPower: 0
-  createPos: {x: 2, y: 2, z: 2}
+  bodyPower: 5
+  createPos: {x: 0, y: -1.5, z: 0}
   bulletSpd: 40
   isTracing: 1
   tracingFrames: 100
   bullet: {fileID: 4767116969241487499, guid: 27d18e0ce7c7cd348b233f5f56609b99, type: 3}
   spawnDis: 10000
-  doDis: 200
-  force: 5
+  doDis: 500
+  force: 15
   rotateDis: 2
-  limitVelo: 30
+  limitVelo: 15
   roopCount: 5
+  roopSeconds: 1.5
   x_range:
-  - -25
-  - 25
+  - -30
+  - 30
   y_range:
-  - 5
-  - 15
+  - 10
+  - 35
   z_range:
-  - 150
-  - 400
-  score: 1
+  - 300
+  - 600
+  score: 5

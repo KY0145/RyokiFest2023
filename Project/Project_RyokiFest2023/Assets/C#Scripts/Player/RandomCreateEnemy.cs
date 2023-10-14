@@ -10,15 +10,16 @@ public class RandomCreateEnemy : MonoBehaviour
     //[SerializeField] GameObject mainCamera;
     [SerializeField] GameObject player;
 
+    [Header("プレイヤーの座標の基準となるオブジェクト")]
+    [SerializeField] GameObject stdPosPlayer;
+
     [SerializeField] GameObject scoreManager;
 
     //空中の敵
     [SerializeField] GameObject[] airEnemies;
-    [SerializeField] EnemyParam airEnemyParam;
 
     //地上の敵
     [SerializeField] GameObject[] landEnemies;
-    [SerializeField] EnemyParam landEnemyParam;
 
 
 
@@ -26,11 +27,20 @@ public class RandomCreateEnemy : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(CreateEnemyCoroutine(airEnemies, airEnemyParam, 30, 2));
-            StartCoroutine(CreateEnemyCoroutine(landEnemies, landEnemyParam, 30, 10));
+            StartCoroutine(CreateEnemyCoroutine(airEnemies, 30, 2));
+            StartCoroutine(CreateEnemyCoroutine(landEnemies, 30, 10));
         }
     }
 
+    /// <summary>
+    /// standardObjを中心としたローカル座標で敵を生成
+    /// ただしy座標はグローバル座標として扱う
+    /// </summary>
+    /// <param name="standardObj">ローカル座標の基準となるオブジェクト</param>
+    /// <param name="x_range">x(ローカル座標)の範囲</param>
+    /// <param name="y_range">y(グローバル座標)の範囲</param>
+    /// <param name="z_range">z(ローカル座標)の範囲</param>
+    /// <returns></returns>
     Vector3 RandomPos(GameObject standardObj, float[] x_range, float[] y_range, float[] z_range)
     {
         float x = Random.Range(x_range[0], x_range[1]);
@@ -39,24 +49,26 @@ public class RandomCreateEnemy : MonoBehaviour
 
         //Vector3 result = CalcVector.Rotate(new Vector3(x, y, z), -standardObj.transform.eulerAngles.y * Mathf.PI / 180);
 
-        return new Vector3(x, y, z) + standardObj.transform.position;
+        return new Vector3(x, y, z) + new Vector3(standardObj.transform.position.x, 0, standardObj.transform.position.z);
     }
 
-    void CreateEnemy(GameObject[] enemies, EnemyParam enemyParam)
+    void CreateEnemy(GameObject[] enemies)
     {
         var e = Instantiate(enemies[Random.Range(0, enemies.Length)]);
+        var enemyParam = e.GetComponent<ControlEnemy>().enemyParam;
         e.transform.position = RandomPos(player, enemyParam.x_range, enemyParam.y_range, enemyParam.z_range);
         GetComponent<MouseLockOnShooting>().enemies.Add(e);
 
         e.GetComponent<ControlEnemy>().player = player;
+        e.GetComponent<ControlEnemy>().stdPosPlayer = stdPosPlayer;
         e.GetComponent<ControlEnemy>().scoreManager = scoreManager;
     }
 
-    IEnumerator CreateEnemyCoroutine(GameObject[] enemies, EnemyParam enemyParam, int counts, float delaySeconds)
+    IEnumerator CreateEnemyCoroutine(GameObject[] enemies, int counts, float delaySeconds)
     {
         for (int i = 0; i < counts; i++)
         {
-            CreateEnemy(enemies, enemyParam);
+            CreateEnemy(enemies);
             yield return new WaitForSeconds(delaySeconds);
         }
     }

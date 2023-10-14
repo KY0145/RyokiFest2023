@@ -47,6 +47,8 @@ public class ControlPlayer : MonoBehaviour
 
             //移動を制限
             GetComponent<movePlayer>().enabled = false;
+            //攻撃を制限
+            GetComponent<MouseLockOnShooting>().isEnd = false;
 
             //ゲームオーバーになったらリザルト画面を表示
             if (GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name == "Player_DeathAnimation"

@@ -50,6 +50,10 @@ public class MouseLockOnShooting : MonoBehaviour
     [Header("ロックオンする敵の仮のリスト")]
     public List<GameObject> targetEnemiesList;
 
+    /// <summary>
+    /// プレイヤーがやられたあとに攻撃不可にする用
+    /// </summary>
+    public bool isEnd = true;
 
     public int frame = 0;
 
@@ -84,7 +88,7 @@ public class MouseLockOnShooting : MonoBehaviour
         }
 
         
-        if (targetEnemiesList.Count != 0)
+        if (targetEnemiesList.Count != 0 && isEnd)
         {
             //スクリーン座標で複数のオブジェクトが重なった場合、プレイヤーが向いている方向に垂直な平面との距離が最も小さいものを選択
             int index = 0;
