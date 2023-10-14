@@ -18,7 +18,7 @@ MonoBehaviour:
   createPos: {x: 0, y: -1.5, z: 0}
   bulletSpd: 70
   isTracing: 1
-  tracingFrames: 45
+  tracingFrames: 120
   bullet: {fileID: 4767116969241487499, guid: 27d18e0ce7c7cd348b233f5f56609b99, type: 3}
   spawnDis: 10000
   doDis: 300
