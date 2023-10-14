@@ -27,8 +27,8 @@ public class RandomCreateEnemy : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(CreateEnemyCoroutine(airEnemies, 30, 2));
-            StartCoroutine(CreateEnemyCoroutine(landEnemies, 30, 10));
+            StartCoroutine(CreateEnemyCoroutine(airEnemies, 2, 45, 2));
+            StartCoroutine(CreateEnemyCoroutine(landEnemies, 1, 30, 3));
         }
     }
 
@@ -64,11 +64,14 @@ public class RandomCreateEnemy : MonoBehaviour
         e.GetComponent<ControlEnemy>().scoreManager = scoreManager;
     }
 
-    IEnumerator CreateEnemyCoroutine(GameObject[] enemies, int counts, float delaySeconds)
+    IEnumerator CreateEnemyCoroutine(GameObject[] enemies, int enemyCounts, int roopCounts, float delaySeconds)
     {
-        for (int i = 0; i < counts; i++)
+        for (int i = 0; i < roopCounts; i++)
         {
-            CreateEnemy(enemies);
+            for(int i1 = 0; i1 < enemyCounts; i1++)
+            {
+                CreateEnemy(enemies);
+            }
             yield return new WaitForSeconds(delaySeconds);
         }
     }

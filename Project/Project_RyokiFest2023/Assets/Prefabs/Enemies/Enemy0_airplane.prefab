@@ -201,9 +201,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  stdPosPlayer: {fileID: 0}
   enemyParam: {fileID: 11400000, guid: 60734bc3b3ada674580d401cbbcf6472, type: 2}
   scoreManager: {fileID: 0}
-  isLocal: 1
   points:
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 20, z: 0}
   HP: 0
