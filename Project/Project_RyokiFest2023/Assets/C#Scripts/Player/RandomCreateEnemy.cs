@@ -27,8 +27,8 @@ public class RandomCreateEnemy : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StartCoroutine(CreateEnemyCoroutine(airEnemies, 2, 45, 2));
-            StartCoroutine(CreateEnemyCoroutine(landEnemies, 1, 30, 3));
+            StartCoroutine(CreateEnemyCoroutine(airEnemies, 2, 150, 2));
+            StartCoroutine(CreateEnemyCoroutine(landEnemies, 1, 100, 3));
         }
     }
 
