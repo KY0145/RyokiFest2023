@@ -141,6 +141,9 @@ public class MouseLockOnShooting : MonoBehaviour
         //敵のワールド座標をスクリーン座標に変換
         Vector2 enemyScreenPos = targetCamera.WorldToScreenPoint(enemyWorldPos);
         
+        mouseScreenPos = new Vector2(mouseScreenPos.x / Camera.main.pixelWidth, mouseScreenPos.y / Camera.main.pixelWidth);
+        enemyScreenPos = new Vector2(enemyScreenPos.x / Camera.main.pixelWidth, enemyScreenPos.y / Camera.main.pixelWidth);
+
         bool isScreen = (mouseScreenPos - enemyScreenPos).magnitude <= distError;
         bool isDis = Mathf.Abs(DisPlanePoint(plane, enemyWorldPos)) - Mathf.Abs(DisPlanePoint(plane, cameraWorldPos)) <= disLimit;
 
